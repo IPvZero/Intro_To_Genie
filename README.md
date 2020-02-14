@@ -1,6 +1,7 @@
 # Intro to Genie
 
-blah blah blah
+This code is based off my video Introduction To Genie video, which can be found here: https://www.youtube.com/watch?v=THgHwS-zVt8
+Personal thank you and shout out to Stuart Clark @bigevilbeard for his contributions and help!
 
 ## Instructions
 
@@ -20,7 +21,10 @@ source dev-shell-essentials.sh
 
 ### Use Case Description
 
-![teaser image](./Images/moo.jpg)
+![teaser image](./Images/geniediff.png)
 
 ### About me
+I am a Youtube content creator and Cybersecurity & Networks student with a strong interest in NetDevOps/Automation/Programmability
+Follow me @IPvZero
+
 
