@@ -1,8 +1,8 @@
 # Intro to Genie
 
-This code is based off my video "Introduction To Genie" video, for initial set up please see this video
+This code is based off my video "Introduction To Genie" video, for initial lab setup please see this video:
 
-[![Introduction to Genie | Python Network Automation!](./Images/youtubeimage.png)](https://www.youtube.com/watch?v=XQBZoy61j2g "How To Setup A Network Automation Environment")
+[![How To Setup A Network Automation Environment](./Images/genie-bgp.png)](https://www.youtube.com/watch?v=XQBZoy61j2g "How To Setup A Network Automation Environment")
 
 ## Instructions
 
