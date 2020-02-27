@@ -76,7 +76,6 @@ interface Loopback0
  ip ospf 1 area 0
 !
 interface GigabitEthernet0/0
- description ~~ MANAGEMENT INTERFACE ~~
  vrf forwarding MGMT
  ip address 192.168.31.11 255.255.255.0
  duplex full
