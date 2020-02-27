@@ -1,0 +1,274 @@
+Current configuration : 5743 bytes
+!
+! Last configuration change at 23:42:26 UTC Wed Feb 26 2020
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition MGMT
+ !
+ address-family ipv4
+ exit-address-family
+!
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name IPvZero.com
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+archive
+ path scp:
+ write-memory
+file prompt quiet
+username john privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet0/0
+ description ~~ MANAGEMENT INTERFACE ~~
+ vrf forwarding MGMT
+ ip address 192.168.31.11 255.255.255.0
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ description ~~ CONNECTION TO R5 ~~
+ ip address 10.0.0.1 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ description ~~ CONNECTION TO R6 ~~
+ ip address 10.0.0.5 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/7
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/8
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/9
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/10
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/11
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+!
+!
+router ospf 1
+ router-id 1.1.1.1
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 2.2.2.2 remote-as 65001
+ neighbor 2.2.2.2 password cisco
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 2.2.2.2 timers 5 15
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 password cisco
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 timers 5 15
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh version 2
+ip scp server enable
+!
+ip access-list standard PERMIT_NAT
+ remark Match all internal traffic for NAT
+ permit any
+ip access-list standard Voice_Traffic
+ permit 10.2.20.0 0.0.0.255
+ permit 10.4.20.0 0.0.0.255
+ permit 10.6.20.0 0.0.0.255
+ip access-list standard Wireless
+ permit 10.2.30.0 0.0.0.255
+ permit 10.4.30.0 0.0.0.255
+ permit 10.6.30.0 0.0.0.255
+!
+ip access-list extended DENY_VLAN66_INTERNET
+ deny   ip 10.2.66.0 0.0.0.255 any
+ permit ip any any
+ip access-list extended FIREWALL
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark ANTI-SPOOF
+ deny   ip 127.0.0.0 0.255.255.255 any
+ deny   ip 192.0.2.0 0.0.0.255 any
+ deny   ip 224.0.0.0 31.255.255.255 any
+ deny   ip host 255.255.255.255 any
+ deny   ip host 0.0.0.0 any
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark FILTER RFC1918
+ deny   ip 10.0.0.0 0.255.255.255 any
+ deny   ip 172.16.0.0 0.15.255.255 any
+ deny   ip 192.168.0.0 0.0.255.255 any
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark PREVENT SUBNET SPOOF
+ deny   ip 200.0.0.0 0.0.0.3 any
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Permit Return Traffic
+ permit icmp any any echo-reply
+ permit icmp any any unreachable
+ permit icmp any any time-exceeded
+ deny   icmp any any
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Permit Established
+ permit tcp any 200.0.0.0 0.0.0.3 established
+ permit udp any range 1 1023 200.0.0.0 0.0.0.3 gt 1023
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Permit FTP Traffic
+ permit tcp any eq ftp-data 200.0.0.0 0.0.0.3 gt 1023
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Permit TFTP & Multimedia
+ permit udp any gt 1023 200.0.0.0 0.0.0.3 gt 1023
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Permit DNS Queries from Google Public DNS
+ permit udp any gt 1023 host 8.8.8.8 eq domain
+ permit tcp host 8.8.4.4 gt 1023 host 8.8.8.8 eq domain
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Explicitly Deny All Other DNS Traffic
+ deny   udp any any eq domain
+ deny   tcp any any eq domain
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Allow Encrypted VPN Traffic
+ permit ip host 195.0.0.1 any
+ remark ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ remark Explicitly Deny Everything
+ deny   ip any any
+!
+!
+!
+!
+control-plane
+!
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input all
+!
+no scheduler allocate
+!
+end
