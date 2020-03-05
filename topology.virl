@@ -2,11 +2,11 @@
 <topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.95" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.95/virl.xsd">
     <extensions>
          <entry key="management_network" type="String">flat</entry>
+         <entry key="lxc.host.static_ip" type="String">172.16.30.125</entry>
     </extensions>
     <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
         <extensions>
             <entry key="static_ip" type="String">172.16.30.101</entry>
-            <entry key="lxc.host.static_ip" type="String">172.16.30.125</entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="string">!
 ! Last configuration change at 15:55:06 UTC Wed Mar 4 2020
