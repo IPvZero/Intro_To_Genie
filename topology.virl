@@ -6,49 +6,116 @@
     <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
         <extensions>
             <entry key="config" type="string">!
+! Last configuration change at 15:55:06 UTC Wed Mar 4 2020
+!
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
 hostname csr1000v-1
+!
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
 !
-!
-!
-license accept end user agreement
-license boot level premium
-!
+enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+enable password cisco
 !
 no aaa new-model
 !
 !
-ipv6 unicast-routing
 !
 !
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
-ip classless
-ip subnet-zero
+!
+!
+!
 no ip domain lookup
-crypto key generate rsa modulus 1024
-ip ssh server algorithm authentication password
-username cisco privilege 15 secret cisco
-line vty 0 4
- transport input ssh telnet
- exec-timeout 720 0
- password cisco
- login local
-line con 0
- password cisco
+ip admission watch-list expiry-time 0
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-391695051
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-391695051
+ revocation-check none
+ rsakeypair TP-self-signed-391695051
+!
+!
+crypto pki certificate chain TP-self-signed-391695051
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9XB0P096TJB
+license accept end user agreement
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$T17L$f9a1zHyWOvS1NM0T1jJ4v.
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
 !
 interface Loopback0
  ip address 1.1.1.1 255.255.255.255
@@ -57,25 +124,24 @@ interface Loopback0
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.14 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
  description ~~ CONNECTION TO R2 ~~
  ip address 10.0.0.1 255.255.255.252
  ip ospf 1 area 0
- no shutdown
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
  description ~~ CONNECTION TO R3 ~~
- ip address 10.0.0.4 255.255.255.252
+ ip address 10.0.0.5 255.255.255.252
  ip ospf 1 area 0
- no shutdown
  negotiation auto
  no mop enabled
  no mop sysid
@@ -94,9 +160,36 @@ router bgp 65001
  neighbor 4.4.4.4 update-source Loopback0
  neighbor 4.4.4.4 timers 5 15
 !
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+ip ssh server algorithm authentication password
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ password cisco
+ stopbits 1
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+!
+!
 !
 !
 !
@@ -112,7 +205,7 @@ end
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
         <entry key="config">!
-! Last configuration change at 14:21:34 UTC Wed Mar 4 2020
+! Last configuration change at 15:57:39 UTC Wed Mar 4 2020
 !
 version 16.9
 service timestamps debug datetime msec
@@ -122,48 +215,106 @@ no platform punt-keepalive disable-kernel-core
 platform console serial
 !
 hostname csr1000v-2
+!
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
 !
-!
-!
-license accept end user agreement
-license boot level premium
-!
+enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+enable password cisco
 !
 no aaa new-model
 !
 !
-ipv6 unicast-routing
 !
 !
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
-ip classless
-ip subnet-zero
+!
+!
+!
 no ip domain lookup
-crypto key generate rsa modulus 1024
-ip ssh server algorithm authentication password
-username cisco privilege 15 secret cisco
-line vty 0 4
- transport input ssh telnet
- exec-timeout 720 0
- password cisco
- login local
-line con 0
- password cisco
+ip admission watch-list expiry-time 0
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3404382099
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3404382099
+ revocation-check none
+ rsakeypair TP-self-signed-3404382099
+!
+!
+crypto pki certificate chain TP-self-signed-3404382099
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 90KXYKS26YK
+license accept end user agreement
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$oDvP$jPG//MizGJ/O7d0kDYH7c0
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
 !
 interface Loopback0
  ip address 2.2.2.2 255.255.255.255
@@ -172,25 +323,24 @@ interface Loopback0
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.15 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
  description ~~ CONNECTION TO R1 ~~
  ip address 10.0.0.2 255.255.255.252
  ip ospf 1 area 0
- no shutdown
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
  description ~~ CONNECTION TO R3 ~~
- ip address 10.0.0.5 255.255.255.252
+ ip address 10.0.0.9 255.255.255.252
  ip ospf 1 area 0
- no shutdown
  negotiation auto
  no mop enabled
  no mop sysid
@@ -209,9 +359,36 @@ router bgp 65001
  neighbor 3.3.3.3 update-source Loopback0
  neighbor 3.3.3.3 timers 5 15
 !
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+ip ssh server algorithm authentication password
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ password cisco
+ stopbits 1
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+!
+!
 !
 !
 !
@@ -225,7 +402,7 @@ end
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
         <entry key="config">!
-! Last configuration change at 14:21:33 UTC Wed Mar 4 2020
+! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
 version 16.9
 service timestamps debug datetime msec
@@ -239,13 +416,16 @@ hostname csr1000v-3
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
+!
+enable secret 5 $1$0Ys8$i3G7gSTp3FSUx8.6bFL04.
 !
 no aaa new-model
 !
@@ -278,6 +458,15 @@ multilink bundle-name authenticated
 !
 !
 !
+crypto pki trustpoint TP-self-signed-3471271769
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3471271769
+ revocation-check none
+ rsakeypair TP-self-signed-3471271769
+!
+!
+crypto pki certificate chain TP-self-signed-3471271769
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
 !
 !
 !
@@ -286,8 +475,7 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-license udi pid CSR1000V sn 9FZNTYN8UB7
+license udi pid CSR1000V sn 98Y8YIAGXYY
 no license smart enable
 diagnostic bootup level minimal
 !
@@ -295,6 +483,7 @@ spanning-tree extend system-id
 !
 !
 !
+username cisco privilege 15 secret 5 $1$Akeo$PSaRTorx6LVBXIVqWUYNS1
 !
 redundancy
 !
@@ -320,40 +509,67 @@ redundancy
 ! 
 !
 !
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.16 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
- no ip address
- shutdown
+ description ~~ CONNECTION TO R6 ~~
+ ip address 10.0.0.13 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
- no ip address
- shutdown
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.10 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet4
- no ip address
- shutdown
+ ip address 10.0.0.17 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
+router ospf 1
+ router-id 3.3.3.3
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 2.2.2.2 remote-as 65001
+ neighbor 2.2.2.2 password cisco
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 2.2.2.2 timers 5 15
+ neighbor 4.4.4.4 remote-as 65001
+ neighbor 4.4.4.4 password cisco
+ neighbor 4.4.4.4 update-source Loopback0
+ neighbor 4.4.4.4 timers 5 15
+ neighbor 6.6.6.6 remote-as 65001
+ neighbor 6.6.6.6 password cisco
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 6.6.6.6 timers 5 15
+!
 ip forward-protocol nd
 no ip http server
+ip http authentication local
 ip http secure-server
 ip http client source-interface GigabitEthernet1
 ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
 !
@@ -374,7 +590,7 @@ line vty 0 4
 !
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
 !
 !
 end
@@ -388,7 +604,7 @@ end
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
         <entry key="config">!
-! Last configuration change at 14:21:33 UTC Wed Mar 4 2020
+! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
 version 16.9
 service timestamps debug datetime msec
@@ -402,13 +618,16 @@ hostname csr1000v-4
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
+!
+enable secret 5 $1$e6q8$RrajYi3apykTGDU1vG7z31
 !
 no aaa new-model
 !
@@ -441,6 +660,15 @@ multilink bundle-name authenticated
 !
 !
 !
+crypto pki trustpoint TP-self-signed-2453231817
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2453231817
+ revocation-check none
+ rsakeypair TP-self-signed-2453231817
+!
+!
+crypto pki certificate chain TP-self-signed-2453231817
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
 !
 !
 !
@@ -449,8 +677,7 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-license udi pid CSR1000V sn 98YMHYKPLYE
+license udi pid CSR1000V sn 9Y6RD8YSM8Z
 no license smart enable
 diagnostic bootup level minimal
 !
@@ -458,6 +685,7 @@ spanning-tree extend system-id
 !
 !
 !
+username cisco privilege 15 secret 5 $1$L/I.$LDTRnPII4UWX1.tYPM02O/
 !
 redundancy
 !
@@ -483,40 +711,68 @@ redundancy
 ! 
 !
 !
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.17 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
- no ip address
- shutdown
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.14 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
- no ip address
- shutdown
+ description ~~ CONNECTION TO R1 ~~
+ ip address 10.0.0.6 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet4
- no ip address
- shutdown
+ description ~~ CONNECTION TO R5 ~~
+ ip address 10.0.0.21 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
+router ospf 1
+ router-id 4.4.4.4
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 1.1.1.1 remote-as 65001
+ neighbor 1.1.1.1 password cisco
+ neighbor 1.1.1.1 update-source Loopback0
+ neighbor 1.1.1.1 timers 5 15
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 password cisco
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 timers 5 15
+ neighbor 5.5.5.5 remote-as 65001
+ neighbor 5.5.5.5 password cisco
+ neighbor 5.5.5.5 update-source Loopback0
+ neighbor 5.5.5.5 timers 5 15
+!
 ip forward-protocol nd
 no ip http server
+ip http authentication local
 ip http secure-server
 ip http client source-interface GigabitEthernet1
 ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
 !
@@ -537,7 +793,7 @@ line vty 0 4
 !
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
 !
 !
 end
@@ -551,7 +807,7 @@ end
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
         <entry key="config">!
-! Last configuration change at 14:21:34 UTC Wed Mar 4 2020
+! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
 version 16.9
 service timestamps debug datetime msec
@@ -565,13 +821,16 @@ hostname csr1000v-5
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
+!
+enable secret 5 $1$V8jG$X/eaecAPGUlL5Iffe6wbt0
 !
 no aaa new-model
 !
@@ -604,6 +863,15 @@ multilink bundle-name authenticated
 !
 !
 !
+crypto pki trustpoint TP-self-signed-2715477869
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2715477869
+ revocation-check none
+ rsakeypair TP-self-signed-2715477869
+!
+!
+crypto pki certificate chain TP-self-signed-2715477869
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
 !
 !
 !
@@ -612,8 +880,7 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-license udi pid CSR1000V sn 9UOZVSJFFEL
+license udi pid CSR1000V sn 9GMFK7VLBMB
 no license smart enable
 diagnostic bootup level minimal
 !
@@ -621,6 +888,7 @@ spanning-tree extend system-id
 !
 !
 !
+username cisco privilege 15 secret 5 $1$lI27$NjA/2TctugMD9BSmewSLb/
 !
 redundancy
 !
@@ -646,40 +914,68 @@ redundancy
 ! 
 !
 !
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.18 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
- no ip address
- shutdown
+ description ~~ CONNECTION TO R6 ~~
+ ip address 10.0.0.25 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
- no ip address
- shutdown
+ description ~~ CONNECTION TO R4 ~~
+ ip address 10.0.0.22 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet4
- no ip address
- shutdown
+ description ~~ CONNECTION TO R8 ~~
+ ip address 10.0.0.29 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
+router ospf 1
+ router-id 5.5.5.5
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 4.4.4.4 remote-as 65001
+ neighbor 4.4.4.4 password cisco
+ neighbor 4.4.4.4 update-source Loopback0
+ neighbor 4.4.4.4 timers 5 15
+ neighbor 6.6.6.6 remote-as 65001
+ neighbor 6.6.6.6 password cisco
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 6.6.6.6 timers 5 15
+ neighbor 8.8.8.8 remote-as 65001
+ neighbor 8.8.8.8 password cisco
+ neighbor 8.8.8.8 update-source Loopback0
+ neighbor 8.8.8.8 timers 5 15
+!
 ip forward-protocol nd
 no ip http server
+ip http authentication local
 ip http secure-server
 ip http client source-interface GigabitEthernet1
 ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
 !
@@ -700,7 +996,7 @@ line vty 0 4
 !
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
 !
 !
 end
@@ -714,7 +1010,7 @@ end
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
         <entry key="config">!
-! Last configuration change at 14:21:34 UTC Wed Mar 4 2020
+! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
 version 16.9
 service timestamps debug datetime msec
@@ -728,13 +1024,16 @@ hostname csr1000v-6
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
+!
+enable secret 5 $1$W3Mc$mMD6ojyJ9sIX7ZP/ta7ij1
 !
 no aaa new-model
 !
@@ -767,6 +1066,15 @@ multilink bundle-name authenticated
 !
 !
 !
+crypto pki trustpoint TP-self-signed-3475557397
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3475557397
+ revocation-check none
+ rsakeypair TP-self-signed-3475557397
+!
+!
+crypto pki certificate chain TP-self-signed-3475557397
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
 !
 !
 !
@@ -775,8 +1083,7 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-license udi pid CSR1000V sn 9AXWZ0BDG3Z
+license udi pid CSR1000V sn 9KETXLQGTWR
 no license smart enable
 diagnostic bootup level minimal
 !
@@ -784,6 +1091,7 @@ spanning-tree extend system-id
 !
 !
 !
+username cisco privilege 15 secret 5 $1$E9A.$uLf.91yMREwAmrtn3FsIW1
 !
 redundancy
 !
@@ -809,40 +1117,68 @@ redundancy
 ! 
 !
 !
+interface Loopback0
+ ip address 6.6.6.6 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.19 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
- no ip address
- shutdown
+ description ~~ CONNECTION TO R5 ~~
+ ip address 10.0.0.26 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
- no ip address
- shutdown
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.18 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet4
- no ip address
- shutdown
+ description ~~ CONNECTION TO R7 ~~
+ ip address 10.0.0.33 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
+router ospf 1
+ router-id 6.6.6.6
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 password cisco
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 timers 5 15
+ neighbor 5.5.5.5 remote-as 65001
+ neighbor 5.5.5.5 password cisco
+ neighbor 5.5.5.5 update-source Loopback0
+ neighbor 5.5.5.5 timers 5 15
+ neighbor 7.7.7.7 remote-as 65001
+ neighbor 7.7.7.7 password cisco
+ neighbor 7.7.7.7 update-source Loopback0
+ neighbor 7.7.7.7 timers 5 15
+!
 ip forward-protocol nd
 no ip http server
+ip http authentication local
 ip http secure-server
 ip http client source-interface GigabitEthernet1
 ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
 !
@@ -863,7 +1199,7 @@ line vty 0 4
 !
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
 !
 !
 end
@@ -877,7 +1213,7 @@ end
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
         <entry key="config">!
-! Last configuration change at 14:21:34 UTC Wed Mar 4 2020
+! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
 version 16.9
 service timestamps debug datetime msec
@@ -891,13 +1227,16 @@ hostname csr1000v-7
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
+!
+enable secret 5 $1$ffsI$6F/5jcIMPJK3rhdjFR7Yt/
 !
 no aaa new-model
 !
@@ -930,6 +1269,15 @@ multilink bundle-name authenticated
 !
 !
 !
+crypto pki trustpoint TP-self-signed-3195583896
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3195583896
+ revocation-check none
+ rsakeypair TP-self-signed-3195583896
+!
+!
+crypto pki certificate chain TP-self-signed-3195583896
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
 !
 !
 !
@@ -938,8 +1286,7 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-license udi pid CSR1000V sn 950IHHJBAI9
+license udi pid CSR1000V sn 95C1Q2B50J0
 no license smart enable
 diagnostic bootup level minimal
 !
@@ -947,6 +1294,7 @@ spanning-tree extend system-id
 !
 !
 !
+username cisco privilege 15 secret 5 $1$WJWh$fTRv9lKFT.ugtiz83UTva.
 !
 redundancy
 !
@@ -972,33 +1320,56 @@ redundancy
 ! 
 !
 !
+interface Loopback0
+ ip address 7.7.7.7 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.20 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
- no ip address
- shutdown
+ description ~~ CONNECTION TO R8 ~~
+ ip address 10.0.0.37 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
- no ip address
- shutdown
+ description ~~ CONNECTION TO R6 ~~
+ ip address 10.0.0.34 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
+router ospf 1
+ router-id 7.7.7.7
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 6.6.6.6 remote-as 65001
+ neighbor 6.6.6.6 password cisco
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 6.6.6.6 timers 5 15
+ neighbor 8.8.8.8 remote-as 65001
+ neighbor 8.8.8.8 password cisco
+ neighbor 8.8.8.8 update-source Loopback0
+ neighbor 8.8.8.8 timers 5 15
+!
 ip forward-protocol nd
 no ip http server
+ip http authentication local
 ip http secure-server
 ip http client source-interface GigabitEthernet1
 ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
 !
@@ -1019,7 +1390,7 @@ line vty 0 4
 !
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
 !
 !
 end
@@ -1032,7 +1403,7 @@ end
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
         <entry key="config">!
-! Last configuration change at 14:21:33 UTC Wed Mar 4 2020
+! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
 version 16.9
 service timestamps debug datetime msec
@@ -1046,13 +1417,16 @@ hostname csr1000v-8
 boot-start-marker
 boot-end-marker
 !
-vrf definition Mgmt-intf
 !
+vrf definition Mgmt-intf
+ !
  address-family ipv4
  exit-address-family
  !
  address-family ipv6
  exit-address-family
+!
+enable secret 5 $1$kULk$yqYqwutnaPpbJLlrYRGPB0
 !
 no aaa new-model
 !
@@ -1085,6 +1459,15 @@ multilink bundle-name authenticated
 !
 !
 !
+crypto pki trustpoint TP-self-signed-2408854072
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2408854072
+ revocation-check none
+ rsakeypair TP-self-signed-2408854072
+!
+!
+crypto pki certificate chain TP-self-signed-2408854072
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
 !
 !
 !
@@ -1093,8 +1476,7 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-license udi pid CSR1000V sn 9A75LM51YJK
+license udi pid CSR1000V sn 97MOOQESVGO
 no license smart enable
 diagnostic bootup level minimal
 !
@@ -1102,6 +1484,7 @@ spanning-tree extend system-id
 !
 !
 !
+username cisco privilege 15 secret 5 $1$I5mf$l80sgaeA/x/VHnCbtBd3p1
 !
 redundancy
 !
@@ -1127,33 +1510,56 @@ redundancy
 ! 
 !
 !
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet1
  description OOB Management
  vrf forwarding Mgmt-intf
- ! Configured on launch
- no ip address
+ ip address 10.255.0.21 255.255.0.0
+ negotiation auto
  cdp enable
- no shutdown 
+ no mop enabled
+ no mop sysid
 !
 interface GigabitEthernet2
- no ip address
- shutdown
+ description ~~ CONNECTION TO R7 ~~
+ ip address 10.0.0.38 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
 interface GigabitEthernet3
- no ip address
- shutdown
+ description ~~ CONNECTION TO R5 ~~
+ ip address 10.0.0.30 255.255.255.252
+ ip ospf 1 area 0
  negotiation auto
  no mop enabled
  no mop sysid
 !
+router ospf 1
+ router-id 8.8.8.8
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 5.5.5.5 remote-as 65001
+ neighbor 5.5.5.5 password cisco
+ neighbor 5.5.5.5 update-source Loopback0
+ neighbor 5.5.5.5 timers 5 15
+ neighbor 7.7.7.7 remote-as 65001
+ neighbor 7.7.7.7 password cisco
+ neighbor 7.7.7.7 update-source Loopback0
+ neighbor 7.7.7.7 timers 5 15
+!
 ip forward-protocol nd
 no ip http server
+ip http authentication local
 ip http secure-server
 ip http client source-interface GigabitEthernet1
 ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
 !
@@ -1174,7 +1580,7 @@ line vty 0 4
 !
 !
 !
-ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+!
 !
 !
 end
