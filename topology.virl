@@ -6,6 +6,7 @@
     <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
         <extensions>
             <entry key="config" type="string">!
+            <entry key="static_ip" type="String">172.16.30.101</entry>
 ! Last configuration change at 15:55:06 UTC Wed Mar 4 2020
 !
 version 16.9
@@ -204,6 +205,7 @@ end
     <node location="445,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-2">
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="static_ip" type="String">172.16.30.102</entry>
         <entry key="config">!
 ! Last configuration change at 15:57:39 UTC Wed Mar 4 2020
 !
@@ -401,6 +403,7 @@ end
     <node location="589,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-3">
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="static_ip" type="String">172.16.30.103</entry>
         <entry key="config">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -603,6 +606,7 @@ end
     <node location="589,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-4">
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="static_ip" type="String">172.16.30.104</entry> 
         <entry key="config">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -806,6 +810,7 @@ end
     <node location="710,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-5">
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="static_ip" type="String">172.16.30.105</entry>
         <entry key="config">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -1009,6 +1014,7 @@ end
     <node location="710,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-6">
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="static_ip" type="String">172.16.30.106</entry>
         <entry key="config">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -1212,6 +1218,7 @@ end
     <node location="868,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-7">
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="static_ip" type="String">172.16.30.107</entry>
         <entry key="config">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -1402,6 +1409,7 @@ end
     <node location="868,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-8">
         <extensions>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="static_ip" type="String">172.16.30.108</entry>
         <entry key="config">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
