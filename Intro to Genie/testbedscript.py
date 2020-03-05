@@ -14,8 +14,8 @@ print("\ndevices:")
 for i in range(101, 108):
   print("  R" + str(i) + ":")
   print("    alias: R" + str(i))
-  print("    os: ios")
-  print("    type: IOSv")
+  print("    os: iosxe")
+  print("    type: csr1000v")
   print("    connections:")
 
   print("\n      defaults:")

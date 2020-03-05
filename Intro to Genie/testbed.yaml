@@ -9,8 +9,8 @@ testbed:
 devices:
   R1:
     alias: R1
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
@@ -25,8 +25,8 @@ devices:
 
   R2:
     alias: R2
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
@@ -41,8 +41,8 @@ devices:
 
   R3:
     alias: R3
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
@@ -57,8 +57,8 @@ devices:
 
   R4:
     alias: R4
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
@@ -73,8 +73,8 @@ devices:
 
   R5:
     alias: R5
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
@@ -89,8 +89,8 @@ devices:
 
   R6:
     alias: R6
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
@@ -105,8 +105,8 @@ devices:
 
   R7:
     alias: R7
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
@@ -121,8 +121,8 @@ devices:
 
   R8:
     alias: R8
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
