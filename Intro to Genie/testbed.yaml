@@ -3,7 +3,7 @@ testbed:
 
   credentials:
     default:
-      username: "john"
+      username: "cisco"
       password: "cisco"
 
 devices:
@@ -17,7 +17,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.11
+        ip: 172.16.30.101
 
     custom:
       abstration:
@@ -33,7 +33,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.12
+        ip: 172.16.30.102
 
     custom:
       abstration:
@@ -49,7 +49,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.13
+        ip: 172.16.30.103
 
     custom:
       abstration:
@@ -65,7 +65,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.14
+        ip: 172.16.30.104
 
     custom:
       abstration:
@@ -81,7 +81,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.15
+        ip: 172.16.30.105
 
     custom:
       abstration:
@@ -97,7 +97,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.16
+        ip: 172.16.30.106
 
     custom:
       abstration:
@@ -113,7 +113,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.17
+        ip: 172.16.30.107
 
     custom:
       abstration:
@@ -129,7 +129,7 @@ devices:
         class: unicon.Unicon
       console:
         protocol: ssh
-        ip: 192.168.31.18
+        ip: 172.16.30.108
 
     custom:
       abstration:
