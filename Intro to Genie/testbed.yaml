@@ -4,9 +4,9 @@ testbed:
   credentials:
     default:
       username: cisco
-      password: cisco
-    enable:
-      password: cisco
+    #   password: cisco
+    # enable:
+    #   password: cisco
 
 devices:
   csr1000v-1:
@@ -22,7 +22,7 @@ devices:
         ip: 172.16.30.101
 
     custom:
-      abstration:
+      abstraction:
          order: [os, type]
 
   csr1000v-2:
