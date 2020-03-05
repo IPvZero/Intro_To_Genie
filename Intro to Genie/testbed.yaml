@@ -4,9 +4,9 @@ testbed:
   credentials:
     default:
       username: cisco
-    #   password: cisco
-    # enable:
-    #   password: cisco
+      password: cisco
+    enable:
+      password: cisco
 
 devices:
   csr1000v-1:
