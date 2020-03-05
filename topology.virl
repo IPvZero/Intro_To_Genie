@@ -6,6 +6,7 @@
     <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
         <extensions>
             <entry key="static_ip" type="String">172.16.30.101</entry>
+            <entry key="lxc.host.static_ip" type="String">172.16.30.125</entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="string">!
 ! Last configuration change at 15:55:06 UTC Wed Mar 4 2020
