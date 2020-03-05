@@ -6,8 +6,6 @@
     <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
         <extensions>
             <entry key="static_ip" type="String">172.16.30.101</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 15:55:06 UTC Wed Mar 4 2020
 !
@@ -207,8 +205,6 @@ end
     <node location="445,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-2">
         <extensions>
             <entry key="static_ip" type="String">172.16.30.102</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 15:57:39 UTC Wed Mar 4 2020
 !
@@ -407,8 +403,6 @@ end
         <extensions>
             <entry key="static_ip" type="String">172.16.30.103</entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -612,8 +606,6 @@ end
         <extensions>
             <entry key="static_ip" type="String">172.16.30.104</entry> 
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -818,8 +810,6 @@ end
         <extensions>
             <entry key="static_ip" type="String">172.16.30.105</entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -1024,8 +1014,6 @@ end
         <extensions>
             <entry key="static_ip" type="String">172.16.30.106</entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -1230,8 +1218,6 @@ end
         <extensions>
             <entry key="static_ip" type="String">172.16.30.107</entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
@@ -1423,8 +1409,6 @@ end
         <extensions>
             <entry key="static_ip" type="String">172.16.30.108</entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
-            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
 ! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
 !
