@@ -7,7 +7,7 @@ testbed:
       password: "cisco"
 
 devices:
-  R1:
+  csr1000v-1:
     alias: R1
     os: iosxe
     type: csr1000v
@@ -23,7 +23,7 @@ devices:
       abstration:
          order: [os, type]
 
-  R2:
+  csr1000v-2:
     alias: R2
     os: iosxe
     type: csr1000v
@@ -39,7 +39,7 @@ devices:
       abstration:
          order: [os, type]
 
-  R3:
+  csr1000v-3:
     alias: R3
     os: iosxe
     type: csr1000v
@@ -55,7 +55,7 @@ devices:
       abstration:
          order: [os, type]
 
-  R4:
+  csr1000v-4:
     alias: R4
     os: iosxe
     type: csr1000v
@@ -71,7 +71,7 @@ devices:
       abstration:
          order: [os, type]
 
-  R5:
+  csr1000v-5:
     alias: R5
     os: iosxe
     type: csr1000v
@@ -87,7 +87,7 @@ devices:
       abstration:
          order: [os, type]
 
-  R6:
+  csr1000v-6:
     alias: R6
     os: iosxe
     type: csr1000v
@@ -103,7 +103,7 @@ devices:
       abstration:
          order: [os, type]
 
-  R7:
+  csr1000v-7:
     alias: R7
     os: iosxe
     type: csr1000v
@@ -119,7 +119,7 @@ devices:
       abstration:
          order: [os, type]
 
-  R8:
+  csr1000v-8:
     alias: R8
     os: iosxe
     type: csr1000v
