@@ -15,7 +15,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.101
 
@@ -31,7 +31,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.102
 
@@ -47,7 +47,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.103
 
@@ -63,7 +63,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.104
 
@@ -79,7 +79,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.105
 
@@ -95,7 +95,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.106
 
@@ -111,7 +111,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.107
 
@@ -127,7 +127,7 @@ devices:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
         ip: 172.16.30.108
 
