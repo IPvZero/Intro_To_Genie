@@ -6,7 +6,6 @@
     <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
         <extensions>
             <entry key="static_ip" type="String">172.16.30.101</entry>
-            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="Auto-generate config" type="Boolean">false</entry>
             <entry key="config" type="string">!
