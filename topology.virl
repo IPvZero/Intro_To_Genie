@@ -2,22 +2,14 @@
 <topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.95" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.95/virl.xsd">
     <extensions>
          <entry key="management_network" type="String">flat</entry>
-         <entry key="lxc.host.static_ip" type="String">172.16.30.125</entry>
+         <entry key="lxc.host.management_ip" type="String">172.16.30.125</entry>
+         <entry key="lxc.host.static_ip" type="String">172.16.30.126</entry>
     </extensions>
     <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
         <extensions>
             <entry key="static_ip" type="String">172.16.30.101</entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="string">!
-! Last configuration change at 15:55:06 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-1
 !
 boot-start-marker
@@ -38,53 +30,14 @@ enable password cisco
 no aaa new-model
 !
 !
-!
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
 ip admission watch-list expiry-time 0
 !
-!
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
 ! 
 !
 ipv6 unicast-routing
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-391695051
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-391695051
- revocation-check none
- rsakeypair TP-self-signed-391695051
-!
-!
-crypto pki certificate chain TP-self-signed-391695051
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
-!
-!
 !
 !
 license udi pid CSR1000V sn 9XB0P096TJB
@@ -100,26 +53,6 @@ username cisco privilege 15 secret 5 $1$T17L$f9a1zHyWOvS1NM0T1jJ4v.
 !
 redundancy
 !
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -174,14 +107,7 @@ ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 ip ssh server algorithm authentication password
 !
 !
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line con 0
@@ -211,15 +137,6 @@ end
             <entry key="static_ip" type="String">172.16.30.102</entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="string">!
-! Last configuration change at 15:57:39 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-2
 !
 boot-start-marker
@@ -240,53 +157,12 @@ enable password cisco
 no aaa new-model
 !
 !
-!
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
 !
 !
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
 ipv6 unicast-routing
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-3404382099
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-3404382099
- revocation-check none
- rsakeypair TP-self-signed-3404382099
-!
-!
-crypto pki certificate chain TP-self-signed-3404382099
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
-!
-!
-!
 !
 license udi pid CSR1000V sn 90KXYKS26YK
 license accept end user agreement
@@ -301,26 +177,6 @@ username cisco privilege 15 secret 5 $1$oDvP$jPG//MizGJ/O7d0kDYH7c0
 !
 redundancy
 !
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -375,14 +231,7 @@ ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 ip ssh server algorithm authentication password
 !
 !
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line con 0
@@ -411,15 +260,6 @@ end
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
             <entry key="config" type="string">!
-! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-3
 !
 boot-start-marker
@@ -439,50 +279,9 @@ enable secret 5 $1$0Ys8$i3G7gSTp3FSUx8.6bFL04.
 no aaa new-model
 !
 !
-!
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-3471271769
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-3471271769
- revocation-check none
- rsakeypair TP-self-signed-3471271769
-!
-!
-crypto pki certificate chain TP-self-signed-3471271769
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
-!
 !
 !
 !
@@ -499,25 +298,6 @@ username cisco privilege 15 secret 5 $1$Akeo$PSaRTorx6LVBXIVqWUYNS1
 redundancy
 !
 !
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -584,14 +364,7 @@ ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
 !
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line vty 0 4
@@ -601,10 +374,6 @@ line vty 0 4
  login local
 line con 0
  password cisco
-!
-!
-!
-!
 !
 !
 end
@@ -620,15 +389,6 @@ end
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry> 
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
             <entry key="config" type="string">!
-! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-4
 !
 boot-start-marker
@@ -648,50 +408,9 @@ enable secret 5 $1$e6q8$RrajYi3apykTGDU1vG7z31
 no aaa new-model
 !
 !
-!
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-2453231817
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-2453231817
- revocation-check none
- rsakeypair TP-self-signed-2453231817
-!
-!
-crypto pki certificate chain TP-self-signed-2453231817
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
-!
 !
 !
 !
@@ -707,26 +426,6 @@ username cisco privilege 15 secret 5 $1$L/I.$LDTRnPII4UWX1.tYPM02O/
 !
 redundancy
 !
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -793,15 +492,7 @@ ip tftp source-interface GigabitEthernet1
 ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
-!
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line vty 0 4
@@ -811,10 +502,6 @@ line vty 0 4
  login local
 line con 0
  password cisco
-!
-!
-!
-!
 !
 !
 end
@@ -830,15 +517,6 @@ end
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
             <entry key="config" type="string">!
-! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-5
 !
 boot-start-marker
@@ -858,50 +536,9 @@ enable secret 5 $1$V8jG$X/eaecAPGUlL5Iffe6wbt0
 no aaa new-model
 !
 !
-!
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-2715477869
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-2715477869
- revocation-check none
- rsakeypair TP-self-signed-2715477869
-!
-!
-crypto pki certificate chain TP-self-signed-2715477869
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
-!
 !
 !
 !
@@ -916,27 +553,6 @@ spanning-tree extend system-id
 username cisco privilege 15 secret 5 $1$lI27$NjA/2TctugMD9BSmewSLb/
 !
 redundancy
-!
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -1003,15 +619,7 @@ ip tftp source-interface GigabitEthernet1
 ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
-!
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line vty 0 4
@@ -1021,10 +629,6 @@ line vty 0 4
  login local
 line con 0
  password cisco
-!
-!
-!
-!
 !
 !
 end
@@ -1040,15 +644,6 @@ end
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
             <entry key="config" type="string">!
-! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-6
 !
 boot-start-marker
@@ -1069,84 +664,11 @@ no aaa new-model
 !
 !
 !
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
 !
 !
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-3475557397
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-3475557397
- revocation-check none
- rsakeypair TP-self-signed-3475557397
-!
-!
-crypto pki certificate chain TP-self-signed-3475557397
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
-!
-!
-!
-!
-license udi pid CSR1000V sn 9KETXLQGTWR
-no license smart enable
-diagnostic bootup level minimal
-!
-spanning-tree extend system-id
-!
-!
-!
-username cisco privilege 15 secret 5 $1$E9A.$uLf.91yMREwAmrtn3FsIW1
-!
-redundancy
-!
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -1213,15 +735,7 @@ ip tftp source-interface GigabitEthernet1
 ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
-!
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line vty 0 4
@@ -1231,9 +745,6 @@ line vty 0 4
  login local
 line con 0
  password cisco
-!
-!
-!
 !
 !
 !
@@ -1250,15 +761,6 @@ end
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
             <entry key="config" type="string">!
-! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-7
 !
 boot-start-marker
@@ -1278,52 +780,11 @@ enable secret 5 $1$ffsI$6F/5jcIMPJK3rhdjFR7Yt/
 no aaa new-model
 !
 !
-!
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
 !
-!
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-3195583896
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-3195583896
- revocation-check none
- rsakeypair TP-self-signed-3195583896
-!
-!
-crypto pki certificate chain TP-self-signed-3195583896
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
-!
-!
-!
+
 !
 license udi pid CSR1000V sn 95C1Q2B50J0
 no license smart enable
@@ -1335,28 +796,6 @@ spanning-tree extend system-id
 !
 username cisco privilege 15 secret 5 $1$WJWh$fTRv9lKFT.ugtiz83UTva.
 !
-redundancy
-!
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -1411,15 +850,7 @@ ip tftp source-interface GigabitEthernet1
 ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
-!
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line vty 0 4
@@ -1429,9 +860,6 @@ line vty 0 4
  login local
 line con 0
  password cisco
-!
-!
-!
 !
 !
 !
@@ -1447,15 +875,6 @@ end
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="AutoNetkit.ASN" type="Integer">1</entry>
             <entry key="config" type="string">!
-! Last configuration change at 17:19:40 UTC Wed Mar 4 2020
-!
-version 16.9
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
 hostname csr1000v-8
 !
 boot-start-marker
@@ -1475,49 +894,9 @@ enable secret 5 $1$kULk$yqYqwutnaPpbJLlrYRGPB0
 no aaa new-model
 !
 !
-!
-!
-!
-!
-!
 no ip domain lookup
 ip domain name cisco
 crypto key generate rsa modulus 2048
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-2408854072
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-2408854072
- revocation-check none
- rsakeypair TP-self-signed-2408854072
-!
-!
-crypto pki certificate chain TP-self-signed-2408854072
- certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
-!
-!
-!
-!
 !
 !
 !
@@ -1534,26 +913,6 @@ username cisco privilege 15 secret 5 $1$I5mf$l80sgaeA/x/VHnCbtBd3p1
 !
 redundancy
 !
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
 !
 !
 interface Loopback0
@@ -1608,15 +967,7 @@ ip tftp source-interface GigabitEthernet1
 ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
 !
 !
-!
-!
-!
-!
 control-plane
-!
-!
-!
-!
 !
 !
 line vty 0 4
@@ -1626,10 +977,6 @@ line vty 0 4
  login local
 line con 0
  password cisco
-!
-!
-!
-!
 !
 !
 end
