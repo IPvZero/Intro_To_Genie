@@ -1,0 +1,998 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.95" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.95/virl.xsd">
+    <extensions>
+         <entry key="management_network" type="String">flat</entry>
+         <entry key="lxc.host.management_ip" type="String">172.16.30.125</entry>
+         <entry key="lxc.host.static_ip" type="String">172.16.30.126</entry>
+    </extensions>
+    <node location="445,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-1">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.101</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="config" type="string">!
+hostname csr1000v-1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+enable password cisco
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+ip admission watch-list expiry-time 0
+!
+! 
+!
+ipv6 unicast-routing
+!
+!
+license udi pid CSR1000V sn 9XB0P096TJB
+license accept end user agreement
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$T17L$f9a1zHyWOvS1NM0T1jJ4v.
+!
+redundancy
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 172.16.30.101 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R2 ~~
+ ip address 10.0.0.1 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.5 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 1.1.1.1
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 2.2.2.2 remote-as 65001
+ neighbor 2.2.2.2 password cisco
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 2.2.2.2 timers 5 15
+ neighbor 4.4.4.4 remote-as 65001
+ neighbor 4.4.4.4 password cisco
+ neighbor 4.4.4.4 update-source Loopback0
+ neighbor 4.4.4.4 timers 5 15
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+ip ssh server algorithm authentication password
+!
+!
+control-plane
+!
+!
+line con 0
+ password cisco
+ stopbits 1
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+        </extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+    </node>
+    <node location="445,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-2">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.102</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="config" type="string">!
+hostname csr1000v-2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+enable password cisco
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+!
+!
+ipv6 unicast-routing
+!
+license udi pid CSR1000V sn 90KXYKS26YK
+license accept end user agreement
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$oDvP$jPG//MizGJ/O7d0kDYH7c0
+!
+redundancy
+!
+!
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 172.16.30.102 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R1 ~~
+ ip address 10.0.0.2 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.9 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 2.2.2.2
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 1.1.1.1 remote-as 65001
+ neighbor 1.1.1.1 password cisco
+ neighbor 1.1.1.1 update-source Loopback0
+ neighbor 1.1.1.1 timers 5 15
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 password cisco
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 timers 5 15
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+ip ssh server algorithm authentication password
+!
+!
+control-plane
+!
+!
+line con 0
+ password cisco
+ stopbits 1
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+!
+!
+!
+!
+!
+end
+
+</entry></extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+    </node>
+    <node location="589,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-3">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.103</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="config" type="string">!
+hostname csr1000v-3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$0Ys8$i3G7gSTp3FSUx8.6bFL04.
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+!
+!
+!
+license udi pid CSR1000V sn 98Y8YIAGXYY
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$Akeo$PSaRTorx6LVBXIVqWUYNS1
+!
+redundancy
+!
+!
+!
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 172.16.30.103 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R6 ~~
+ ip address 10.0.0.13 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.10 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ ip address 10.0.0.17 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 3.3.3.3
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 2.2.2.2 remote-as 65001
+ neighbor 2.2.2.2 password cisco
+ neighbor 2.2.2.2 update-source Loopback0
+ neighbor 2.2.2.2 timers 5 15
+ neighbor 4.4.4.4 remote-as 65001
+ neighbor 4.4.4.4 password cisco
+ neighbor 4.4.4.4 update-source Loopback0
+ neighbor 4.4.4.4 timers 5 15
+ neighbor 6.6.6.6 remote-as 65001
+ neighbor 6.6.6.6 password cisco
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 6.6.6.6 timers 5 15
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+!
+!
+control-plane
+!
+!
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+!
+end
+
+</entry></extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+        <interface name="GigabitEthernet4" id="2"/>
+    </node>
+    <node location="589,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-4">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.104</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry> 
+            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="config" type="string">!
+hostname csr1000v-4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$e6q8$RrajYi3apykTGDU1vG7z31
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+!
+!
+!
+license udi pid CSR1000V sn 9Y6RD8YSM8Z
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$L/I.$LDTRnPII4UWX1.tYPM02O/
+!
+redundancy
+!
+!
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 172.16.30.104 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.14 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R1 ~~
+ ip address 10.0.0.6 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ description ~~ CONNECTION TO R5 ~~
+ ip address 10.0.0.21 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 4.4.4.4
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 1.1.1.1 remote-as 65001
+ neighbor 1.1.1.1 password cisco
+ neighbor 1.1.1.1 update-source Loopback0
+ neighbor 1.1.1.1 timers 5 15
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 password cisco
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 timers 5 15
+ neighbor 5.5.5.5 remote-as 65001
+ neighbor 5.5.5.5 password cisco
+ neighbor 5.5.5.5 update-source Loopback0
+ neighbor 5.5.5.5 timers 5 15
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+!
+control-plane
+!
+!
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+!
+end
+
+</entry></extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+        <interface name="GigabitEthernet4" id="2"/>
+    </node>
+    <node location="710,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-5">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.105</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="config" type="string">!
+hostname csr1000v-5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$V8jG$X/eaecAPGUlL5Iffe6wbt0
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+!
+!
+!
+license udi pid CSR1000V sn 9GMFK7VLBMB
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$lI27$NjA/2TctugMD9BSmewSLb/
+!
+redundancy
+!
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ip address 172.16.30.105 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R6 ~~
+ ip address 10.0.0.25 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R4 ~~
+ ip address 10.0.0.22 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ description ~~ CONNECTION TO R8 ~~
+ ip address 10.0.0.29 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 5.5.5.5
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 4.4.4.4 remote-as 65001
+ neighbor 4.4.4.4 password cisco
+ neighbor 4.4.4.4 update-source Loopback0
+ neighbor 4.4.4.4 timers 5 15
+ neighbor 6.6.6.6 remote-as 65001
+ neighbor 6.6.6.6 password cisco
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 6.6.6.6 timers 5 15
+ neighbor 8.8.8.8 remote-as 65001
+ neighbor 8.8.8.8 password cisco
+ neighbor 8.8.8.8 update-source Loopback0
+ neighbor 8.8.8.8 timers 5 15
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+!
+control-plane
+!
+!
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+!
+end
+
+</entry></extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+        <interface name="GigabitEthernet4" id="2"/>
+    </node>
+    <node location="710,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-6">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.106</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="config" type="string">!
+hostname csr1000v-6
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$W3Mc$mMD6ojyJ9sIX7ZP/ta7ij1
+!
+no aaa new-model
+!
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+!
+!
+!
+!
+interface Loopback0
+ ip address 6.6.6.6 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 172.16.30.106 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R5 ~~
+ ip address 10.0.0.26 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R3 ~~
+ ip address 10.0.0.18 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ description ~~ CONNECTION TO R7 ~~
+ ip address 10.0.0.33 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 6.6.6.6
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 password cisco
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 timers 5 15
+ neighbor 5.5.5.5 remote-as 65001
+ neighbor 5.5.5.5 password cisco
+ neighbor 5.5.5.5 update-source Loopback0
+ neighbor 5.5.5.5 timers 5 15
+ neighbor 7.7.7.7 remote-as 65001
+ neighbor 7.7.7.7 password cisco
+ neighbor 7.7.7.7 update-source Loopback0
+ neighbor 7.7.7.7 timers 5 15
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+!
+control-plane
+!
+!
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+!
+!
+end
+
+</entry></extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+        <interface name="GigabitEthernet4" id="2"/>
+    </node>
+    <node location="868,255" type="SIMPLE" subtype="CSR1000v" name="csr1000v-7">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.107</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="config" type="string">!
+hostname csr1000v-7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$ffsI$6F/5jcIMPJK3rhdjFR7Yt/
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+!
+
+!
+license udi pid CSR1000V sn 95C1Q2B50J0
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$WJWh$fTRv9lKFT.ugtiz83UTva.
+!
+!
+!
+interface Loopback0
+ ip address 7.7.7.7 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 172.16.30.107 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R8 ~~
+ ip address 10.0.0.37 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R6 ~~
+ ip address 10.0.0.34 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 7.7.7.7
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 6.6.6.6 remote-as 65001
+ neighbor 6.6.6.6 password cisco
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 6.6.6.6 timers 5 15
+ neighbor 8.8.8.8 remote-as 65001
+ neighbor 8.8.8.8 password cisco
+ neighbor 8.8.8.8 update-source Loopback0
+ neighbor 8.8.8.8 timers 5 15
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+!
+control-plane
+!
+!
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+!
+!
+end
+
+</entry></extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+    </node>
+    <node location="868,412" type="SIMPLE" subtype="CSR1000v" name="csr1000v-8">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.108</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.ASN" type="Integer">1</entry>
+            <entry key="config" type="string">!
+hostname csr1000v-8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$kULk$yqYqwutnaPpbJLlrYRGPB0
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name cisco
+crypto key generate rsa modulus 2048
+!
+!
+!
+!
+license udi pid CSR1000V sn 97MOOQESVGO
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$I5mf$l80sgaeA/x/VHnCbtBd3p1
+!
+redundancy
+!
+!
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ip address 172.16.30.108 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description ~~ CONNECTION TO R7 ~~
+ ip address 10.0.0.38 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description ~~ CONNECTION TO R5 ~~
+ ip address 10.0.0.30 255.255.255.252
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 8.8.8.8
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 5.5.5.5 remote-as 65001
+ neighbor 5.5.5.5 password cisco
+ neighbor 5.5.5.5 update-source Loopback0
+ neighbor 5.5.5.5 timers 5 15
+ neighbor 7.7.7.7 remote-as 65001
+ neighbor 7.7.7.7 password cisco
+ neighbor 7.7.7.7 update-source Loopback0
+ neighbor 7.7.7.7 timers 5 15
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+ip tftp source-interface GigabitEthernet1
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 172.16.30.254
+!
+!
+control-plane
+!
+!
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+!
+end
+
+</entry></extensions>
+        <interface name="GigabitEthernet2" id="0"/>
+        <interface name="GigabitEthernet3" id="1"/>
+    </node>
+    <connection src="/virl:topology/virl:node[3]/virl:interface[1]" dst="/virl:topology/virl:node[4]/virl:interface[1]"/>
+    <connection src="/virl:topology/virl:node[3]/virl:interface[3]" dst="/virl:topology/virl:node[6]/virl:interface[2]"/>
+    <connection src="/virl:topology/virl:node[7]/virl:interface[1]" dst="/virl:topology/virl:node[8]/virl:interface[1]"/>
+    <connection src="/virl:topology/virl:node[1]/virl:interface[1]" dst="/virl:topology/virl:node[2]/virl:interface[1]"/>
+    <connection src="/virl:topology/virl:node[1]/virl:interface[2]" dst="/virl:topology/virl:node[4]/virl:interface[2]"/>
+    <connection src="/virl:topology/virl:node[5]/virl:interface[1]" dst="/virl:topology/virl:node[6]/virl:interface[1]"/>
+    <connection src="/virl:topology/virl:node[5]/virl:interface[3]" dst="/virl:topology/virl:node[8]/virl:interface[2]"/>
+    <connection src="/virl:topology/virl:node[2]/virl:interface[2]" dst="/virl:topology/virl:node[3]/virl:interface[2]"/>
+    <connection src="/virl:topology/virl:node[4]/virl:interface[3]" dst="/virl:topology/virl:node[5]/virl:interface[2]"/>
+    <connection src="/virl:topology/virl:node[6]/virl:interface[3]" dst="/virl:topology/virl:node[7]/virl:interface[2]"/>
+</topology>

@@ -3,133 +3,135 @@ testbed:
 
   credentials:
     default:
-      username: "john"
-      password: "cisco"
+      username: cisco
+      password: cisco
+    enable:
+      password: cisco
 
 devices:
-  R1:
+  csr1000v-1:
     alias: R1
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.11
+        ip: 172.16.30.101
 
     custom:
-      abstration:
+      abstraction:
          order: [os, type]
 
-  R2:
+  csr1000v-2:
     alias: R2
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.12
+        ip: 172.16.30.102
 
     custom:
       abstration:
          order: [os, type]
 
-  R3:
+  csr1000v-3:
     alias: R3
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.13
+        ip: 172.16.30.103
 
     custom:
       abstration:
          order: [os, type]
 
-  R4:
+  csr1000v-4:
     alias: R4
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.14
+        ip: 172.16.30.104
 
     custom:
       abstration:
          order: [os, type]
 
-  R5:
+  csr1000v-5:
     alias: R5
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.15
+        ip: 172.16.30.105
 
     custom:
       abstration:
          order: [os, type]
 
-  R6:
+  csr1000v-6:
     alias: R6
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.16
+        ip: 172.16.30.106
 
     custom:
       abstration:
          order: [os, type]
 
-  R7:
+  csr1000v-7:
     alias: R7
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.17
+        ip: 172.16.30.107
 
     custom:
       abstration:
          order: [os, type]
 
-  R8:
+  csr1000v-8:
     alias: R8
-    os: ios
-    type: IOSv
+    os: iosxe
+    type: csr1000v
     connections:
 
       defaults:
         class: unicon.Unicon
-      console:
+      a:
         protocol: ssh
-        ip: 192.168.31.18
+        ip: 172.16.30.108
 
     custom:
       abstration:
